@@ -1,0 +1,191 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 15px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Headings */
+h1 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 16px;
+    color: #333;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Settings Section */
+.settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+    padding-bottom: 20px;
+}
+
+/* Labels */
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+/* Range Slider */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #9bcbff;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border: 2px solid #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"].difficulty-interval {
+    background: #ffcccb;
+}
+
+input[type="range"].difficulty-interval::-webkit-slider-thumb {
+    border: 2px solid #ff6347;
+}
+
+#slider-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    padding: 20px;
+}
+
+/* Button */
+button {
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    width: 100%;
+    max-width: 280px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Stats Section */
+.stats {
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Each Stat Item */
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Heading (slightly grey) */
+.stat-item p {
+    font-size: 16px;
+    color: #777; /* Lighter grey */
+    font-weight: bold;
+    margin: 0;
+}
+
+/* Slot-Machine Effect for Numbers */
+.stat-item span {
+    font-weight: bold;
+    font-size: 32px; /* Make it large */
+    color: #007bff;
+    font-family: 'Courier New', monospace;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 2px solid #007bff;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+/* Small text next to numbers */
+.stat-item small {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Animation Effect */
+.stat-item span.change {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+
+/* Progress Bar */
+.progress-container {
+    width: 100%;
+    max-width: 250px;
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 20px auto;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #007bff;
+    transition: width 0.5s ease-in-out;
+}
+
+#captcha-progress-text {
+    font-size: 12px;
+    color: #333;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Separator Line */
+.separator {
+    width: 80%;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}

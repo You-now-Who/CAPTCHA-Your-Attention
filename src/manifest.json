@@ -14,6 +14,12 @@
       "matches": ["https://www.youtube.com/shorts/*"]
     }
   ],
+  "icons": {
+   "16": "imgs/img16.png",
+   "32": "imgs/img32.png",
+   "48": "imgs/img48.png",
+   "128": "imgs/img128.png"
+ },
   "background": {
     "service_worker": "service-workers/service-worker.js",
     "type": "module"

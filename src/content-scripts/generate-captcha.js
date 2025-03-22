@@ -1,4 +1,4 @@
-function generateMathCaptcha() {
+function generateMathCaptcha(difficulty) {
   const num1 = Math.floor(Math.random() * 10) + 1;
   const num2 = Math.floor(Math.random() * 10) + 1;
   const operators = ["+", "-", "*"];
@@ -9,7 +9,18 @@ function generateMathCaptcha() {
   else if (operator === "-") answer = num1 - num2;
   else if (operator === "*") answer = num1 * num2;
 
-  return { text: `${num1} ${operator} ${num2}`, answer: answer.toString() };
+  let text = `${num1} ${operator} ${num2}`;
+
+  for (let i = 1; i < difficulty; i++) {
+    const num = Math.floor(Math.random() * 10) + 1;
+    const operator = operators[Math.floor(Math.random() * operators.length)];
+    if (operator === "+") answer += num;
+    else if (operator === "-") answer -= num;
+    else if (operator === "*") answer *= num;
+    text += ` ${operator} ${num}`;
+  }
+
+  return { text: text, answer: answer.toString() };
 }
 
 function showCapt2cha() {
@@ -61,7 +72,7 @@ function showCapt2cha() {
   document.body.prepend(captchaContainer);
 }
 
-function showCaptcha(videoElement) {
+function showCaptcha(videoElement, vidsScrolled) {
   // Remove existing CAPTCHA and overlay if any
   const existingCaptcha = document.getElementById("custom-captcha-container");
   const existingOverlay = document.getElementById("captcha-overlay");
@@ -73,60 +84,60 @@ function showCaptcha(videoElement) {
   overlay.id = "captcha-overlay";
   overlay.style.display = "block";
   document.body.appendChild(overlay);
-  
-  const { text, answer } = generateMathCaptcha();
 
-  const captchaContainer = document.createElement("div");
-  captchaContainer.id = "custom-captcha-container";
-  captchaContainer.dataset.captchaAnswer = answer;
+  chrome.storage.local.get(['difficultyInterval'], (data) => {
+    const difficultyInterval = data.difficultyInterval || 3;
+    const difficulty = Math.floor(vidsScrolled / difficultyInterval) + 1;
+    const { text, answer } = generateMathCaptcha(difficulty);
 
-  const captchaHeading = document.createElement("div");
-  captchaHeading.className = "captcha-heading";
-  captchaHeading.textContent = "Stop the Brainrot 🔥";
+    const captchaContainer = document.createElement("div");
+    captchaContainer.id = "custom-captcha-container";
+    captchaContainer.dataset.captchaAnswer = answer;
 
-  // CAPTCHA display text
-  const captchaText = document.createElement("div");
-  captchaText.id = "captcha-text";
-  captchaText.textContent = text;
+    const captchaHeading = document.createElement("div");
+    captchaHeading.className = "captcha-heading";
+    captchaHeading.textContent = "Stop the Brainrot 🔥";
 
-  const captchaInput = document.createElement("input");
-  captchaInput.type = "number";
-  captchaInput.placeholder = "Enter answer";
+    // CAPTCHA display text
+    const captchaText = document.createElement("div");
+    captchaText.id = "captcha-text";
+    captchaText.textContent = text;
 
-  const watermark = document.createElement("p");
-  watermark.innerText = "brainrotCAPTCHA"
-  watermark.classList.add("watermark");
+    const captchaInput = document.createElement("input");
+    captchaInput.type = "number";
+    captchaInput.placeholder = "Enter answer";
 
-  const submitButton = document.createElement("button");
-  submitButton.textContent = "Verify";
+    const submitButton = document.createElement("button");
+    submitButton.textContent = "Verify";
 
-  const refreshButton = document.createElement("button");
-  refreshButton.id = "captcha-refresh";
-  refreshButton.textContent = "Refresh";
-  refreshButton.onclick = showCaptcha;
+    const refreshButton = document.createElement("button");
+    refreshButton.id = "captcha-refresh";
+    refreshButton.textContent = "Refresh";
+    refreshButton.onclick = () => showCaptcha(videoElement, vidsScrolled);
 
-  submitButton.onclick = function () {
-    if (captchaInput.value === captchaContainer.dataset.captchaAnswer) {
-      alert("CAPTCHA Verified!");
-      if (videoElement) {
-        videoElement.play();
+    submitButton.onclick = function () {
+      if (captchaInput.value === captchaContainer.dataset.captchaAnswer) {
+        alert("CAPTCHA Verified!");
+        if (videoElement) {
+          videoElement.play();
+        }
+        captchaContainer.remove();
+        overlay.remove();
+      } else {
+        alert("Incorrect answer. Try again!");
+        captchaInput.value = "";
       }
-      captchaContainer.remove();
-      overlay.remove();
-    } else {
-      alert("Incorrect answer. Try again!");
-      captchaInput.value = "";
-    }
-  };
+    };
 
-  captchaContainer.append(
-    captchaHeading,
-    captchaText,
-    captchaInput,
-    submitButton
-    // refreshButton
-  );
-  document.body.prepend(captchaContainer);
+    captchaContainer.append(
+      captchaHeading,
+      captchaText,
+      captchaInput,
+      submitButton,
+      refreshButton
+    );
+    document.body.prepend(captchaContainer);
+  });
 }
 
 showCaptcha();

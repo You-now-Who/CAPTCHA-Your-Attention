@@ -3,9 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CAPTCHA Settings</title>
+    <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-    <h1>This is the captcha</h1>
+    <h1>CAPTCHA Settings</h1>
+
+    <div class="settings">
+        <label for="captcha-interval">Show CAPTCHA after:</label>
+        <input type="range" id="captcha-interval" min="1" max="51" step="3" value="1">
+        <span id="slider-value">1 short (every ~25 seconds)</span>
+        <br>
+        <label for="difficulty-interval">Increase Difficulty after:</label>
+        <input type="range" id="difficulty-interval" class="difficulty-interval" min="1" max="10" step="1" value="3">
+        <span id="difficulty-slider-value">3 shorts (every ~1 min 9 sec)</span>
+        <button id="save-settings">Save</button>
+    </div>
+
+    <hr class="separator">
+
+    <div class="stats">
+        <div class="stat-item">
+            <p>Total Shorts Scrolled</p>
+            <span id="total-shorts-scrolled">0</span>
+        </div>
+    
+        <div class="stat-item">
+            <p>Seconds Spent Watching Shorts</p>
+            <span id="time-spent">0</span>
+        </div>
+    
+        <div class="stat-item">
+            <p>CAPTCHAs Solved</p>
+            <span id="captchas-solved">0</span>
+        </div>
+    
+        <div class="stat-item">
+            <p>Scrolled Distance</p>
+            <span id="scroll-distance">0</span> <small>meters</small>
+        </div>
+    </div>
+    
+
+    <script src="popup.js"></script>
 </body>
 </html>
