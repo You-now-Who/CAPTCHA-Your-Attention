@@ -1,37 +1,108 @@
+/* Darkened overlay */
+#captcha-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+}
+
+/* CAPTCHA container */
 #custom-captcha-container {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: auto;
-    background-color: white;
-    color: black;
+    background-color: #f9f9f9;
+    color: #333;
     padding: 20px;
     text-align: center;
     z-index: 10000;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    border: 2px solid #007bff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+    border: 2px solid #4a90e2; /* Blue border */
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 280px;
 }
 
-#custom-captcha-container input {
-    padding: 10px;
-    border: 1px solid #007bff;
+/* CAPTCHA heading (kept blue) */
+.captcha-heading {
+    color: #4a90e2;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* CAPTCHA text display */
+#captcha-text {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px;
+    background: repeating-linear-gradient(
+        -45deg,
+        #f9f9f9,
+        #f9f9f9 10px,
+        #e0e0e0 10px,
+        #e0e0e0 20px
+    );
+    display: inline-block;
+    border: 2px solid #4a90e2; /* Blue border */
     border-radius: 5px;
-    width: 150px;
+    transform: rotate(-2deg);
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
 }
 
+/* CAPTCHA input */
+#custom-captcha-container input {
+    padding: 8px;
+    border: 2px solid #4a90e2; /* Blue border */
+    border-radius: 5px;
+    width: 160px;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* CAPTCHA buttons */
 #custom-captcha-container button {
-    padding: 10px 20px;
-    background-color: #007bff;
+    padding: 8px 15px;
+    background-color: #4a90e2;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#custom-captcha-container button:hover {
+    background-color: #357ab8;
+}
+
+/* Refresh button */
+#captcha-refresh {
+    background-color: #777;
+    font-size: 12px;
+    padding: 6px;
+    border-radius: 5px;
+}
+
+#captcha-refresh:hover {
+    background-color: #555;
+}
+
+.captchaHeading {
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+    font-size: 12px;
+    color: #777;
 }

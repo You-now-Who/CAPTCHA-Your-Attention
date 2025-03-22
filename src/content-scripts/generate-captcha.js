@@ -12,32 +12,30 @@ function generateMathCaptcha() {
   return { text: `${num1} ${operator} ${num2}`, answer: answer.toString() };
 }
 
-function displayCaptcha() {
-  // Remove existing CAPTCHA if any
-  const existingCaptcha = document.getElementById("custom-captcha-container");
-  if (existingCaptcha) existingCaptcha.remove();
+function showCapt2cha() {
+  document.getElementById("custom-captcha-container")?.remove();
 
-  // Generate new CAPTCHA
   const { text, answer } = generateMathCaptcha();
 
-  // Create CAPTCHA container
   const captchaContainer = document.createElement("div");
   captchaContainer.id = "custom-captcha-container";
   captchaContainer.dataset.captchaAnswer = answer;
 
-  // Create CAPTCHA display
-  const captchaDisplay = document.createElement("span");
-  captchaDisplay.textContent = `Solve: ${text}`;
+  const heading = document.createElement("div");
+  heading.className = "captcha-heading";
+  heading.textContent = "Stop the Brainrot 🔥";
 
-  // Create input field
+  // CAPTCHA display text
+  const captchaText = document.createElement("div");
+  captchaText.id = "captcha-text";
+  captchaText.textContent = text;
+
   const captchaInput = document.createElement("input");
   captchaInput.type = "number";
   captchaInput.placeholder = "Enter answer";
 
-  // Create submit button
   const submitButton = document.createElement("button");
   submitButton.textContent = "Verify";
-
   submitButton.onclick = function () {
     if (captchaInput.value === captchaContainer.dataset.captchaAnswer) {
       alert("CAPTCHA Verified!");
@@ -48,31 +46,87 @@ function displayCaptcha() {
     }
   };
 
-  // Append elements
-  captchaContainer.appendChild(captchaDisplay);
-  captchaContainer.appendChild(captchaInput);
-  captchaContainer.appendChild(submitButton);
+  const refreshButton = document.createElement("button");
+  refreshButton.id = "captcha-refresh";
+  refreshButton.textContent = "Refresh";
+  refreshButton.onclick = showCaptcha;
 
-  // Inject into body
+  captchaContainer.append(
+    heading,
+    captchaText,
+    captchaInput,
+    submitButton,
+    refreshButton
+  );
   document.body.prepend(captchaContainer);
 }
 
-// Load styles dynamically if needed
-function loadCaptchaStyles() {
-  if (!document.getElementById("captcha-style")) {
-    const link = document.createElement("link");
-    link.id = "captcha-style";
-    link.rel = "stylesheet";
-    link.href = chrome.runtime.getURL("styles.css"); // Load from extension directory
-    document.head.appendChild(link);
-  }
+function showCaptcha(videoElement) {
+  // Remove existing CAPTCHA and overlay if any
+  const existingCaptcha = document.getElementById("custom-captcha-container");
+  const existingOverlay = document.getElementById("captcha-overlay");
+  if (existingCaptcha) existingCaptcha.remove();
+  if (existingOverlay) existingOverlay.remove();
+
+  // Create overlay
+  const overlay = document.createElement("div");
+  overlay.id = "captcha-overlay";
+  overlay.style.display = "block";
+  document.body.appendChild(overlay);
+  
+  const { text, answer } = generateMathCaptcha();
+
+  const captchaContainer = document.createElement("div");
+  captchaContainer.id = "custom-captcha-container";
+  captchaContainer.dataset.captchaAnswer = answer;
+
+  const captchaHeading = document.createElement("div");
+  captchaHeading.className = "captcha-heading";
+  captchaHeading.textContent = "Stop the Brainrot 🔥";
+
+  // CAPTCHA display text
+  const captchaText = document.createElement("div");
+  captchaText.id = "captcha-text";
+  captchaText.textContent = text;
+
+  const captchaInput = document.createElement("input");
+  captchaInput.type = "number";
+  captchaInput.placeholder = "Enter answer";
+
+  const watermark = document.createElement("p");
+  watermark.innerText = "brainrotCAPTCHA"
+  watermark.classList.add("watermark");
+
+  const submitButton = document.createElement("button");
+  submitButton.textContent = "Verify";
+
+  const refreshButton = document.createElement("button");
+  refreshButton.id = "captcha-refresh";
+  refreshButton.textContent = "Refresh";
+  refreshButton.onclick = showCaptcha;
+
+  submitButton.onclick = function () {
+    if (captchaInput.value === captchaContainer.dataset.captchaAnswer) {
+      alert("CAPTCHA Verified!");
+      if (videoElement) {
+        videoElement.play();
+      }
+      captchaContainer.remove();
+      overlay.remove();
+    } else {
+      alert("Incorrect answer. Try again!");
+      captchaInput.value = "";
+    }
+  };
+
+  captchaContainer.append(
+    captchaHeading,
+    captchaText,
+    captchaInput,
+    submitButton
+    // refreshButton
+  );
+  document.body.prepend(captchaContainer);
 }
 
-// Call this function to inject CAPTCHA and ensure styles are loaded
-function showCaptcha() {
-  loadCaptchaStyles();
-  displayCaptcha();
-}
-
-
-// showCaptcha()
+showCaptcha();
