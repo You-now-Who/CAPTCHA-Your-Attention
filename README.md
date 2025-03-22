@@ -6,6 +6,12 @@
 
 Are you tired of endlessly scrolling through shorts and losing track of time? Do you need a friendly nudge to remind you that there's a world outside your screen? Look no further! **CAPTCHA-Your-Attention** is here to save your sanity and your productivity.
 
+![screenshot 1](https://i.imgur.com/zQamTKf.png)
+Brainrot Captchas
+
+![screenshot 2](https://i.imgur.com/yp1zYCA.png)
+CAPTCHA Controls
+
 ## Features
 
 ### 🧠 Brainrot Prevention
