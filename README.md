@@ -1,5 +1,7 @@
 # CAPTCHA-Your-Attention
 
+![funni meme about doom-scrolling](https://i.chzbgr.com/full/10369355776/h3636B0F6/imgflipcom-doom-scrolling)
+
 ## Welcome to the Anti-Doomscrolling Revolution!
 
 Are you tired of endlessly scrolling through shorts and losing track of time? Do you need a friendly nudge to remind you that there's a world outside your screen? Look no further! **CAPTCHA-Your-Attention** is here to save your sanity and your productivity.
