@@ -1,70 +1,49 @@
-function generateCaptchaText(length = 6) {
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let captchaText = "";
-  for (let i = 0; i < length; i++) {
-    captchaText += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return captchaText;
+function generateMathCaptcha() {
+  const num1 = Math.floor(Math.random() * 10) + 1;
+  const num2 = Math.floor(Math.random() * 10) + 1;
+  const operators = ["+", "-", "*"];
+  const operator = operators[Math.floor(Math.random() * operators.length)];
+
+  let answer;
+  if (operator === "+") answer = num1 + num2;
+  else if (operator === "-") answer = num1 - num2;
+  else if (operator === "*") answer = num1 * num2;
+
+  return { text: `${num1} ${operator} ${num2}`, answer: answer.toString() };
 }
 
-function createCaptchaElement() {
-  // Remove any existing CAPTCHA
+function displayCaptcha() {
+  // Remove existing CAPTCHA if any
   const existingCaptcha = document.getElementById("custom-captcha-container");
   if (existingCaptcha) existingCaptcha.remove();
 
-  // Create the container
+  // Generate new CAPTCHA
+  const { text, answer } = generateMathCaptcha();
+
+  // Create CAPTCHA container
   const captchaContainer = document.createElement("div");
   captchaContainer.id = "custom-captcha-container";
-  captchaContainer.style.position = "fixed";
-  captchaContainer.style.top = "0";
-  captchaContainer.style.left = "0";
-  captchaContainer.style.width = "100%";
-  captchaContainer.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-  captchaContainer.style.color = "white";
-  captchaContainer.style.padding = "10px";
-  captchaContainer.style.textAlign = "center";
-  captchaContainer.style.zIndex = "10000";
-  captchaContainer.style.fontFamily = "Arial, sans-serif";
-  captchaContainer.style.display = "flex";
-  captchaContainer.style.justifyContent = "center";
-  captchaContainer.style.alignItems = "center";
-  captchaContainer.style.gap = "10px";
-
-  // Generate CAPTCHA text
-  const captchaText = generateCaptchaText();
-  captchaContainer.dataset.captcha = captchaText;
+  captchaContainer.dataset.captchaAnswer = answer;
 
   // Create CAPTCHA display
   const captchaDisplay = document.createElement("span");
-  captchaDisplay.textContent = `Enter: ${captchaText}`;
-  captchaDisplay.style.fontSize = "18px";
-  captchaDisplay.style.fontWeight = "bold";
+  captchaDisplay.textContent = `Solve: ${text}`;
 
   // Create input field
   const captchaInput = document.createElement("input");
-  captchaInput.type = "text";
-  captchaInput.placeholder = "Enter CAPTCHA";
-  captchaInput.style.padding = "5px";
-  captchaInput.style.border = "1px solid #ccc";
-  captchaInput.style.borderRadius = "5px";
+  captchaInput.type = "number";
+  captchaInput.placeholder = "Enter answer";
 
   // Create submit button
   const submitButton = document.createElement("button");
   submitButton.textContent = "Verify";
-  submitButton.style.padding = "5px 10px";
-  submitButton.style.backgroundColor = "#28a745";
-  submitButton.style.color = "white";
-  submitButton.style.border = "none";
-  submitButton.style.borderRadius = "5px";
-  submitButton.style.cursor = "pointer";
 
   submitButton.onclick = function () {
-    if (captchaInput.value === captchaContainer.dataset.captcha) {
+    if (captchaInput.value === captchaContainer.dataset.captchaAnswer) {
       alert("CAPTCHA Verified!");
       captchaContainer.remove();
     } else {
-      alert("Incorrect CAPTCHA. Try again!");
+      alert("Incorrect answer. Try again!");
       captchaInput.value = "";
     }
   };
@@ -78,5 +57,22 @@ function createCaptchaElement() {
   document.body.prepend(captchaContainer);
 }
 
-// Inject CAPTCHA immediately
-createCaptchaElement();
+// Load styles dynamically if needed
+function loadCaptchaStyles() {
+  if (!document.getElementById("captcha-style")) {
+    const link = document.createElement("link");
+    link.id = "captcha-style";
+    link.rel = "stylesheet";
+    link.href = chrome.runtime.getURL("styles.css"); // Load from extension directory
+    document.head.appendChild(link);
+  }
+}
+
+// Call this function to inject CAPTCHA and ensure styles are loaded
+function showCaptcha() {
+  loadCaptchaStyles();
+  displayCaptcha();
+}
+
+
+// showCaptcha()

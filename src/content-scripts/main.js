@@ -15,7 +15,7 @@ setInterval(() => {
         // addToScrollVids(1);
         vidsScrolled++;
         // console.log("Added to scroll vids")
-        
+        showCaptcha()
     }
   }
   console.log(vidsScrolled);
