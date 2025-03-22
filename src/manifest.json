@@ -9,7 +9,7 @@
   "host_permissions": ["https://*.youtube.com/"],
   "content_scripts": [
     {
-      "js": ["/content-scripts/main.js", "content-scripts/chrome-handler.js", "content-scripts/generate-captcha.js"],
+      "js": ["/content-scripts/main.js", "content-scripts/chrome-handler.js", "content-scripts/generate-captcha.js", "content-scripts/math.js"],
       "css": ["/styles/main.css"],
       "matches": ["https://www.youtube.com/shorts/*"]
     }

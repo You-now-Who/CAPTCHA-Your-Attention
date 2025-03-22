@@ -75,11 +75,3 @@ function updateScrollDistance(vidsScrolled) {
     const metersScrolled = ((vidsScrolled * pixelsPerShort) / pixelsPerMeter).toFixed(2);
     document.getElementById('scroll-distance').textContent = metersScrolled;
 }
-
-// Update CAPTCHA progress bar
-function updateCaptchaProgress(captchasSolved) {
-    const maxCaptchas = 10;  // Define a threshold for 100% completion
-    const progress = Math.min((captchasSolved / maxCaptchas) * 100, 100);
-    document.getElementById('captcha-progress').style.width = progress + "%";
-    document.getElementById('captcha-progress-text').textContent = `${progress.toFixed(0)}% Captchas Completed`;
-}
