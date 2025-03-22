@@ -1,0 +1,21 @@
+{
+  "name": "CAPTCHA Your Attention",
+  "description": "Stopping you from doomscrolling with CAPTCHAs",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": ["https://*.youtube.com/"],
+  "content_scripts": [
+    {
+      "js": [
+        "/content-scripts/main.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/shorts/*"
+      ]
+    }
+  ],
+  "permissions": ["activeTab"]
+}
